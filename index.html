@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boudewijn van Rijswijk — Résumé</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────────── */
+    :root {
+      --bg:        #ffffff;
+      --dark:      #0d1b2a;
+      --dark2:     #132236;
+      --primary:   #10b981;   /* emerald — sustainability */
+      --primary-d: #059669;
+      --accent:    #f59e0b;   /* amber — warmth / highlight */
+      --text:      #1e293b;
+      --muted:     #64748b;
+      --border:    #e2e8f0;
+      --card:      #f8fafc;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+    a { text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─── NAV ─────────────────────────────────────────────────────── */
+    nav {
+      position: fixed; inset: 0 0 auto;
+      z-index: 100;
+      padding: 1.1rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background .3s, border-color .3s, box-shadow .3s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 24px rgba(0,0,0,.06);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.3rem;
+      color: #fff;
+      transition: color .3s;
+    }
+    nav.scrolled .nav-logo { color: var(--dark); }
+
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: .88rem; font-weight: 500;
+      color: rgba(255,255,255,.78);
+      transition: color .25s;
+    }
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--primary); }
+
+    .nav-mobile-btn {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: .25rem;
+    }
+    .nav-mobile-btn span {
+      display: block; width: 24px; height: 2px;
+      background: #fff; border-radius: 2px; transition: background .3s;
+    }
+    nav.scrolled .nav-mobile-btn span { background: var(--dark); }
+
+    /* ─── HERO ────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 0 2.5rem;
+    }
+    /* subtle grid */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    /* glows */
+    .hero::before {
+      content: '';
+      position: absolute; top: -20%; right: -8%;
+      width: 640px; height: 640px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(16,185,129,.14) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -12%; left: -5%;
+      width: 480px; height: 480px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,158,11,.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1160px; margin: 0 auto; width: 100%;
+      position: relative; z-index: 1;
+      padding-top: 90px; padding-bottom: 4rem;
+    }
+
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: rgba(16,185,129,.12);
+      border: 1px solid rgba(16,185,129,.28);
+      color: var(--primary);
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .38rem 1rem; border-radius: 2rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      font-weight: 700; line-height: 1; color: #fff;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { color: var(--primary); font-style: normal; }
+
+    .hero-subtitle {
+      font-size: clamp(.95rem, 1.8vw, 1.2rem);
+      color: rgba(255,255,255,.58);
+      max-width: 580px; line-height: 1.75;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-roles {
+      display: flex; flex-wrap: wrap; gap: .65rem;
+      margin-bottom: 3rem;
+    }
+    .hero-role {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.11);
+      color: rgba(255,255,255,.78);
+      padding: .45rem 1.1rem; border-radius: 2rem;
+      font-size: .86rem; font-weight: 500;
+    }
+
+    .hero-cta { display: flex; flex-wrap: wrap; gap: .9rem; }
+
+    .btn {
+      display: inline-block;
+      padding: .85rem 2rem; border-radius: .5rem;
+      font-weight: 600; font-size: .93rem;
+      transition: all .28s ease;
+    }
+    .btn-solid {
+      background: var(--primary); color: #fff;
+    }
+    .btn-solid:hover {
+      background: var(--primary-d);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(16,185,129,.38);
+    }
+    .btn-ghost {
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.22);
+    }
+    .btn-ghost:hover {
+      border-color: var(--primary); color: var(--primary);
+    }
+
+    /* scroll indicator */
+    .scroll-cue {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      color: rgba(255,255,255,.28);
+      font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+      animation: cue 2.2s ease-in-out infinite;
+    }
+    .scroll-cue::after {
+      content: '';
+      width: 1px; height: 38px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.28), transparent);
+    }
+    @keyframes cue {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      55%      { transform: translateX(-50%) translateY(9px); }
+    }
+
+    /* ─── STATS STRIP ────────────────────────────────────────────── */
+    .stats-strip {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 2.75rem 2.5rem;
+    }
+    .stats-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .stat { display: flex; align-items: flex-start; gap: 1rem; }
+    .stat-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: rgba(16,185,129,.1); border-radius: .6rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .stat-body h4 { font-size: 1.25rem; font-weight: 700; color: var(--dark); }
+    .stat-body p  { font-size: .82rem; color: var(--muted); margin-top: .15rem; }
+
+    /* ─── SHARED SECTION STYLES ──────────────────────────────────── */
+    section { padding: 6rem 2.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .sec-label {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: .65rem;
+    }
+    .sec-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; color: var(--dark); margin-bottom: 1rem;
+    }
+    .sec-line {
+      width: 56px; height: 4px;
+      background: var(--primary); border-radius: 2px;
+      margin-bottom: 3.25rem;
+    }
+
+    /* ─── EXPERIENCE ─────────────────────────────────────────────── */
+    #experience { background: #fff; }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), rgba(16,185,129,.1));
+    }
+
+    .tl-item {
+      position: relative; padding-bottom: 2.75rem;
+      opacity: 0; transform: translateX(-18px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .tl-item.visible { opacity: 1; transform: translateX(0); }
+
+    .tl-dot {
+      position: absolute; left: -2.37rem; top: .3rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--primary);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    .tl-dot.now {
+      background: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent), 0 0 14px rgba(245,158,11,.35);
+    }
+
+    .tl-date {
+      font-size: .78rem; font-weight: 700;
+      color: var(--primary); letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: .3rem;
+    }
+    .tl-role  { font-size: 1.12rem; font-weight: 700; color: var(--dark); }
+    .tl-org   { font-size: .88rem; font-weight: 500; color: var(--muted); margin: .2rem 0 .7rem; }
+    .tl-desc  { font-size: .9rem; color: var(--muted); line-height: 1.68; }
+    .tl-badge {
+      display: inline-block;
+      margin-top: .8rem;
+      background: rgba(16,185,129,.08);
+      border: 1px solid rgba(16,185,129,.22);
+      color: var(--primary);
+      font-size: .74rem; font-weight: 700;
+      padding: .22rem .7rem; border-radius: 1rem;
+    }
+    .tl-badge.amber {
+      background: rgba(245,158,11,.08);
+      border-color: rgba(245,158,11,.28);
+      color: var(--accent);
+    }
+
+    /* ─── SKILLS ─────────────────────────────────────────────────── */
+    #skills { background: var(--dark); }
+    #skills .sec-label  { color: var(--primary); }
+    #skills .sec-title  { color: #fff; }
+    #skills .sec-line   { background: var(--accent); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .sk-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 1rem; padding: 1.75rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease, background .25s, border-color .25s;
+    }
+    .sk-card.visible { opacity: 1; transform: translateY(0); }
+    .sk-card:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(16,185,129,.3);
+      transform: translateY(-4px);
+    }
+
+    .sk-cat {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 1.1rem;
+      display: flex; align-items: center; gap: .45rem;
+    }
+    .sk-tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .sk-tag {
+      background: rgba(255,255,255,.07);
+      color: rgba(255,255,255,.78);
+      padding: .35rem .8rem; border-radius: 2rem;
+      font-size: .83rem; font-weight: 500;
+      transition: background .2s, color .2s;
+    }
+    .sk-tag:hover { background: var(--primary); color: #fff; }
+
+    /* ─── EDUCATION ──────────────────────────────────────────────── */
+    #education { background: var(--card); }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .edu-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 1rem; padding: 2rem;
+      position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease, box-shadow .3s;
+    }
+    .edu-card.visible { opacity: 1; transform: translateY(0); }
+    .edu-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+    .edu-card:hover { box-shadow: 0 14px 44px rgba(0,0,0,.1); transform: translateY(-4px); }
+
+    .edu-year   { font-size: .78rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .45rem; }
+    .edu-degree { font-size: 1.08rem; font-weight: 700; color: var(--dark); margin-bottom: .3rem; }
+    .edu-school { font-size: .87rem; color: var(--muted); margin-bottom: .95rem; }
+    .edu-detail { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+
+    /* ─── CONTACT ────────────────────────────────────────────────── */
+    #contact { background: #fff; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+
+    .contact-intro {
+      font-size: .97rem; color: var(--muted);
+      line-height: 1.78; margin-bottom: 2rem;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: .9rem; }
+
+    .c-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: .8rem;
+      color: var(--text);
+      transition: border-color .25s, background .25s, transform .25s;
+    }
+    .c-link:hover {
+      border-color: var(--primary);
+      background: rgba(16,185,129,.04);
+      transform: translateX(5px);
+    }
+    .c-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: rgba(16,185,129,.1); border-radius: .5rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .c-label { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+    .c-value { font-size: .9rem; font-weight: 500; color: var(--dark); }
+
+    .contact-btns {
+      display: flex; flex-wrap: wrap; gap: .8rem;
+      margin-top: 1.5rem;
+    }
+    .btn-linkedin {
+      background: #0a66c2; color: #fff;
+    }
+    .btn-linkedin:hover {
+      background: #004182;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(10,102,194,.35);
+    }
+
+    /* quote card */
+    .quote-card {
+      background: var(--dark);
+      border-radius: 1.25rem; padding: 3rem;
+      position: relative; overflow: hidden;
+    }
+    .quote-card::before {
+      content: '"';
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9rem; line-height: 1;
+      color: rgba(16,185,129,.12);
+      position: absolute; top: -1.5rem; left: 1.25rem;
+      pointer-events: none;
+    }
+    .quote-text {
+      font-size: 1.15rem; font-style: italic;
+      color: rgba(255,255,255,.82); line-height: 1.72;
+      position: relative; z-index: 1; margin-bottom: 1.5rem;
+    }
+    .quote-attr { font-size: .85rem; font-weight: 600; color: var(--primary); }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 1.75rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer p  { font-size: .78rem; color: rgba(255,255,255,.28); }
+    footer em { font-style: normal; color: var(--primary); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: .78rem; color: rgba(255,255,255,.28); transition: color .2s; }
+    .footer-links a:hover { color: var(--primary); }
+
+    /* ─── MOBILE NAV ─────────────────────────────────────────────── */
+    @media (max-width: 760px) {
+      .nav-links {
+        display: none; flex-direction: column;
+        position: fixed; inset: 0;
+        background: var(--dark);
+        justify-content: center; align-items: center;
+        gap: 2rem; z-index: 99;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1.4rem; color: #fff !important; }
+      .nav-mobile-btn { display: flex; z-index: 100; }
+
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero h1 { font-size: 3rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    /* ─── ANIMATION UTILITIES ────────────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ─────────────────────────────────────────────────────── -->
+  <nav id="nav">
+    <a href="#home" class="nav-logo">BvR</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-btn" id="menuBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────── -->
+  <section class="hero" id="home">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-pill">📍 's-Hertogenbosch, Netherlands</div>
+
+      <h1>Boudewijn<br><em>van Rijswijk</em></h1>
+
+      <p class="hero-subtitle">
+        Sustainability student, hospitality enthusiast, and lifelong learner —
+        driven by curiosity, fluent in connection, and always available.
+      </p>
+
+      <div class="hero-roles">
+        <span class="hero-role">🎓 Global Sustainability Sciences · Utrecht University</span>
+        <span class="hero-role">🍽️ Bistro de Bistro</span>
+        <span class="hero-role">🚗 MobiliteitsDiensten Nederland</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#experience" class="btn btn-solid">View Experience</a>
+        <a href="#contact"    class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="scroll-cue">scroll</div>
+  </section>
+
+  <!-- ── STATS STRIP ───────────────────────────────────────────────── -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-body">
+          <h4>5+ Years</h4>
+          <p>Service industry experience</p>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">👥</div>
+        <div class="stat-body">
+          <h4>Team Leader</h4>
+          <p>Shift &amp; team management</p>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">🌍</div>
+        <div class="stat-body">
+          <h4>3 Languages</h4>
+          <p>Dutch · English · French</p>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">🎓</div>
+        <div class="stat-body">
+          <h4>BSc Candidate</h4>
+          <p>Utrecht University</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXPERIENCE ─────────────────────────────────────────────────── -->
+  <section id="experience">
+    <div class="container">
+      <p class="sec-label">Career path</p>
+      <h2 class="sec-title">Work Experience</h2>
+      <div class="sec-line"></div>
+
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot now"></div>
+          <div class="tl-date">2026 — Present</div>
+          <div class="tl-role">Waiter</div>
+          <div class="tl-org">Bistro de Bistro &middot; Restaurant</div>
+          <p class="tl-desc">
+            Serving guests in a restaurant setting, drawing on years of hospitality experience
+            to deliver smooth, friendly service.
+          </p>
+          <span class="tl-badge amber">Current position</span>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot now"></div>
+          <div class="tl-date">Current · Part-time</div>
+          <div class="tl-role">Chauffeur</div>
+          <div class="tl-org">MobiliteitsDiensten Nederland</div>
+          <p class="tl-desc">
+            Providing reliable transport on a part-time basis alongside other work and studies.
+          </p>
+          <span class="tl-badge amber">Current position</span>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2024 — 2026</div>
+          <div class="tl-role">Shift Manager</div>
+          <div class="tl-org">BZG Horeca Groep &middot; Hospitality</div>
+          <p class="tl-desc">
+            Managed front-of-house operations during shifts: coordinating staff, handling guest
+            issues, and keeping service running on time and on standard.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2021 — 2024</div>
+          <div class="tl-role">Waiter</div>
+          <div class="tl-org">BZG Horeca Groep &middot; Hospitality</div>
+          <p class="tl-desc">
+            Worked as a waiter across multiple years, building strong people skills and
+            experience in a busy hospitality environment.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2020 — 2021</div>
+          <div class="tl-role">Stocker</div>
+          <div class="tl-org">Albert Heijn &middot; Supermarket</div>
+          <p class="tl-desc">
+            Stocked shelves and kept the store tidy. A straightforward part-time job during
+            the pandemic while hospitality was closed.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2019 — 2020</div>
+          <div class="tl-role">Waiter</div>
+          <div class="tl-org">BZG Horeca Groep &middot; Hospitality</div>
+          <p class="tl-desc">
+            First role in hospitality — waiting tables and learning the basics of service
+            in a professional setting.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ─────────────────────────────────────────────────────── -->
+  <section id="skills">
+    <div class="container">
+      <p class="sec-label">What I bring</p>
+      <h2 class="sec-title">Skills &amp; Strengths</h2>
+      <div class="sec-line"></div>
+
+      <div class="skills-grid">
+
+        <div class="sk-card">
+          <div class="sk-cat">🌍 Languages</div>
+          <div class="sk-tags">
+            <span class="sk-tag">Dutch — Native</span>
+            <span class="sk-tag">English — Fluent</span>
+            <span class="sk-tag">French — Intermediate</span>
+            <span class="sk-tag">Latin — 7 years academic</span>
+          </div>
+        </div>
+
+        <div class="sk-card">
+          <div class="sk-cat">👥 Leadership</div>
+          <div class="sk-tags">
+            <span class="sk-tag">Team Management</span>
+            <span class="sk-tag">Shift Coordination</span>
+            <span class="sk-tag">Staff Onboarding</span>
+          </div>
+        </div>
+
+        <div class="sk-card">
+          <div class="sk-cat">💬 Communication</div>
+          <div class="sk-tags">
+            <span class="sk-tag">Presentation Skills</span>
+            <span class="sk-tag">Customer Relations</span>
+            <span class="sk-tag">Persuasion</span>
+            <span class="sk-tag">Multilingual</span>
+          </div>
+        </div>
+
+        <div class="sk-card">
+          <div class="sk-cat">💻 Technical (Learning)</div>
+          <div class="sk-tags">
+            <span class="sk-tag">HTML &amp; CSS</span>
+            <span class="sk-tag">JavaScript</span>
+            <span class="sk-tag">Web Development</span>
+          </div>
+        </div>
+
+        <div class="sk-card">
+          <div class="sk-cat">🌱 Academic</div>
+          <div class="sk-tags">
+            <span class="sk-tag">Sustainability Science</span>
+            <span class="sk-tag">Research &amp; Analysis</span>
+            <span class="sk-tag">Academic Writing</span>
+          </div>
+        </div>
+
+        <div class="sk-card">
+          <div class="sk-cat">✨ Soft Skills</div>
+          <div class="sk-tags">
+            <span class="sk-tag">Adaptability</span>
+            <span class="sk-tag">Stress Resistance</span>
+            <span class="sk-tag">Team Player</span>
+            <span class="sk-tag">Initiative</span>
+            <span class="sk-tag">Problem Solving</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ──────────────────────────────────────────────────── -->
+  <section id="education">
+    <div class="container">
+      <p class="sec-label">Academic background</p>
+      <h2 class="sec-title">Education</h2>
+      <div class="sec-line"></div>
+
+      <div class="edu-grid">
+
+        <div class="edu-card">
+          <div class="edu-year">2022 — Present</div>
+          <div class="edu-degree">BSc Global Sustainability Sciences</div>
+          <div class="edu-school">Utrecht University &middot; Utrecht, Netherlands</div>
+          <p class="edu-detail">
+            An interdisciplinary programme that connects natural science, social science, and humanities
+            to tackle the world's most pressing sustainability challenges. Develops both analytical
+            rigour and the ability to communicate complex ideas across disciplines.
+          </p>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-year">Graduated</div>
+          <div class="edu-degree">Gymnasium (VWO)</div>
+          <div class="edu-school">Stedelijk Gymnasium Den Bosch &middot; 's-Hertogenbosch, Netherlands</div>
+          <p class="edu-detail">
+            Pre-university grammar school with a classical track. Completed 7 years of Latin,
+            building a strong foundation in analytical thinking and classical languages. Also
+            studied French, which — alongside Latin — made Romance languages feel natural.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ─────────────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <p class="sec-label">Let's connect</p>
+      <h2 class="sec-title">Get in Touch</h2>
+      <div class="sec-line"></div>
+
+      <div class="contact-grid">
+        <div>
+          <p class="contact-intro">
+            Whether you're looking for a motivated team player, a bilingual communicator,
+            or someone who brings sustainability thinking to real-world challenges —
+            I'd love to have a conversation.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:boudewijnvanrijswijk@gmail.com" class="c-link">
+              <div class="c-icon">✉️</div>
+              <div>
+                <div class="c-label">Email</div>
+                <div class="c-value">boudewijnvanrijswijk@gmail.com</div>
+              </div>
+            </a>
+            <a href="tel:+31624129227" class="c-link">
+              <div class="c-icon">📱</div>
+              <div>
+                <div class="c-label">Phone</div>
+                <div class="c-value">+31 6 24 12 92 27</div>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/boudewijn-van-rijswijk-0a0b6528b" target="_blank" rel="noopener" class="c-link">
+              <div class="c-icon">💼</div>
+              <div>
+                <div class="c-label">LinkedIn</div>
+                <div class="c-value">linkedin.com/in/boudewijn-van-rijswijk-0a0b6528b</div>
+              </div>
+            </a>
+          </div>
+          <div class="contact-btns">
+            <a href="mailto:boudewijnvanrijswijk@gmail.com" class="btn btn-solid">✉️ Send an email</a>
+            <a href="https://www.linkedin.com/in/boudewijn-van-rijswijk-0a0b6528b" target="_blank" rel="noopener" class="btn btn-linkedin">💼 View LinkedIn</a>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-text">
+            "I work hard, I care about the people around me, and I always find a way to
+            make things work — whether it's a busy Friday night shift or a tight deadline."
+          </p>
+          <div class="quote-attr">— Boudewijn van Rijswijk</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+  <footer>
+    <p>© 2026 <em>Boudewijn van Rijswijk</em></p>
+    <div class="footer-links">
+      <a href="#home">Back to top ↑</a>
+      <a href="mailto:boudewijnvanrijswijk@gmail.com">Email me</a>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
+  <script>
+    /* — Navbar scroll class — */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+      highlightNav();
+    }, { passive: true });
+
+    /* — Mobile menu — */
+    const menuBtn   = document.getElementById('menuBtn');
+    const navLinks  = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    /* — Active nav highlight — */
+    const sections  = document.querySelectorAll('section[id]');
+    const navAnchors = navLinks.querySelectorAll('a');
+    function highlightNav() {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navAnchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+      });
+    }
+
+    /* — Intersection Observer for scroll animations — */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(
+      '.tl-item, .sk-card, .edu-card, .fade-up'
+    ).forEach(el => io.observe(el));
+
+    /* stagger delays */
+    document.querySelectorAll('.tl-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.11}s`;
+    });
+    document.querySelectorAll('.sk-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.09}s`;
+    });
+    document.querySelectorAll('.edu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.12}s`;
+    });
+  </script>
+</body>
+</html>
