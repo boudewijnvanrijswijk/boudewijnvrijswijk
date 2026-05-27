@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%230d1b2a'/><text x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' fill='%2310b981' text-anchor='middle' letter-spacing='-1'>BvR</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%230d1b2a'/><text x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' fill='%2310b981' text-anchor='middle' letter-spacing='-1'>BvR</text></svg>" /><rect width='64' height='64' rx='16' fill='%230d1b2a'/><text x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' fill='%2310b981' text-anchor='middle' letter-spacing='-1'>BvR</text></svg>" /><rect width='64' height='64' rx='16' fill='%230d1b2a'/><text x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' fill='%2310b981' text-anchor='middle' letter-spacing='-1'>BvR</text></svg>" />
 
   <style>
     /* ─── TOKENS ─────────────────────────────────────────────────── */
@@ -554,6 +554,70 @@
       .hero-cta .btn { text-align: center; }
     }
 
+    /* ─── INTERESTS ─────────────────────────────────────────────── */
+    #interests { background: var(--dark); }
+    #interests .sec-label { color: var(--primary); }
+    #interests .sec-title { color: #fff; }
+    #interests .sec-line  { background: var(--accent); }
+
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .interest-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 1.25rem;
+      padding: 2.25rem 2rem;
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease, background .25s, border-color .25s;
+    }
+    .interest-card.visible { opacity: 1; transform: translateY(0); }
+    .interest-card:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(16,185,129,.3);
+      transform: translateY(-4px);
+    }
+
+    .interest-icon {
+      font-size: 2.5rem; line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .interest-body h3 {
+      font-size: 1.1rem; font-weight: 700;
+      color: #fff; margin-bottom: .35rem;
+    }
+    .interest-sub {
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: .65rem;
+    }
+    .interest-desc {
+      font-size: .88rem; color: rgba(255,255,255,.55);
+      line-height: 1.68;
+    }
+
+    /* ─── LANGUAGE TOGGLE ────────────────────────────────────────── */
+    #lang-btn {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.85);
+      padding: .32rem .9rem;
+      border-radius: 2rem;
+      font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+      cursor: pointer; transition: all .25s;
+      margin-right: .35rem; font-family: inherit;
+    }
+    #lang-btn:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
+    nav.scrolled #lang-btn {
+      background: rgba(16,185,129,.1);
+      border-color: rgba(16,185,129,.3);
+      color: var(--primary);
+    }
     /* ─── ANIMATION UTILITIES ────────────────────────────────────── */
     .fade-up {
       opacity: 0; transform: translateY(28px);
@@ -568,11 +632,13 @@
   <nav id="nav">
     <a href="#home" class="nav-logo">BvR</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#education">Education</a></li>
+      <li><a href="#experience" data-nl="Ervaring" data-en="Experience">Ervaring</a></li>
+      <li><a href="#skills" data-nl="Vaardigheden" data-en="Skills">Vaardigheden</a></li>
+      <li><a href="#education" data-nl="Opleiding" data-en="Education">Opleiding</a></li>
+      <li><a href="#interests" data-nl="Interesses" data-en="Interests">Interesses</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button id="lang-btn" onclick="toggleLang()">EN</button>
     <button class="nav-mobile-btn" id="menuBtn" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -583,13 +649,12 @@
     <div class="hero-grid"></div>
     <div class="hero-content">
       <div class="hero-text">
-        <div class="hero-pill">📍 's-Hertogenbosch, Netherlands</div>
+        <div class="hero-pill" data-nl="📍 's-Hertogenbosch, Nederland" data-en="📍 's-Hertogenbosch, Netherlands">📍 's-Hertogenbosch, Nederland</div>
 
         <h1>Boudewijn<br><em>van Rijswijk</em></h1>
 
-        <p class="hero-subtitle">
-          Sustainability student, hospitality enthusiast, and lifelong learner —
-          driven by curiosity, fluent in connection, and always available.
+        <p class="hero-subtitle" data-nl="Duurzaamheidsstudent, horecaliefhebber en eeuwig lerende — gedreven door nieuwsgierigheid, vaardig in verbinding en altijd beschikbaar." data-en="Sustainability student, hospitality enthusiast, and lifelong learner — driven by curiosity, fluent in connection, and always available.">
+          Duurzaamheidsstudent, horecaliefhebber en eeuwig lerende — gedreven door nieuwsgierigheid, vaardig in verbinding en altijd beschikbaar.
         </p>
 
         <div class="hero-roles">
@@ -599,8 +664,8 @@
         </div>
 
         <div class="hero-cta">
-          <a href="#experience" class="btn btn-solid">View Experience</a>
-          <a href="#contact"    class="btn btn-ghost">Get in Touch</a>
+          <a href="#experience" class="btn btn-solid" data-nl="Bekijk Ervaring" data-en="View Experience">Bekijk Ervaring</a>
+          <a href="#contact"    class="btn btn-ghost" data-nl="Neem Contact Op" data-en="Get in Touch">Neem Contact Op</a>
         </div>
       </div>
 
@@ -619,29 +684,29 @@
       <div class="stat">
         <div class="stat-icon">⚡</div>
         <div class="stat-body">
-          <h4>5+ Years</h4>
-          <p>Service industry experience</p>
+          <h4 data-nl="5+ Jaar" data-en="5+ Years">5+ Jaar</h4>
+          <p data-nl="Ervaring in de horeca" data-en="Service industry experience">Ervaring in de horeca</p>
         </div>
       </div>
       <div class="stat">
         <div class="stat-icon">👥</div>
         <div class="stat-body">
-          <h4>Team Leader</h4>
-          <p>Shift &amp; team management</p>
+          <h4 data-nl="Teamleider" data-en="Team Leader">Teamleider</h4>
+          <p data-nl="Shift- &amp; teammanagement" data-en="Shift &amp; team management">Shift- &amp; teammanagement</p>
         </div>
       </div>
       <div class="stat">
         <div class="stat-icon">🌍</div>
         <div class="stat-body">
-          <h4>3 Languages</h4>
-          <p>Dutch · English · French</p>
+          <h4 data-nl="3 Talen" data-en="3 Languages">3 Talen</h4>
+          <p data-nl="Nederlands · Engels · Frans" data-en="Dutch · English · French">Nederlands · Engels · Frans</p>
         </div>
       </div>
       <div class="stat">
         <div class="stat-icon">🎓</div>
         <div class="stat-body">
-          <h4>BSc Candidate</h4>
-          <p>Utrecht University</p>
+          <h4 data-nl="BSc Student" data-en="BSc Candidate">BSc Student</h4>
+          <p data-nl="Universiteit Utrecht" data-en="Utrecht University">Universiteit Utrecht</p>
         </div>
       </div>
     </div>
@@ -650,76 +715,71 @@
   <!-- ── EXPERIENCE ─────────────────────────────────────────────────── -->
   <section id="experience">
     <div class="container">
-      <p class="sec-label">Career path</p>
-      <h2 class="sec-title">Work Experience</h2>
+      <p class="sec-label" data-nl="Loopbaan" data-en="Career path">Loopbaan</p>
+      <h2 class="sec-title" data-nl="Werkervaring" data-en="Work Experience">Werkervaring</h2>
       <div class="sec-line"></div>
 
       <div class="timeline">
 
         <div class="tl-item">
           <div class="tl-dot now"></div>
-          <div class="tl-date">2026 — Present</div>
-          <div class="tl-role">Waiter</div>
+          <div class="tl-date" data-nl="2026 — Heden" data-en="2026 — Present">2026 — Heden</div>
+          <div class="tl-role" data-nl="Ober" data-en="Waiter">Ober</div>
           <div class="tl-org">Bistro de Bistro &middot; Restaurant</div>
-          <p class="tl-desc">
-            Serving guests in a restaurant setting, drawing on years of hospitality experience
-            to deliver smooth, friendly service.
+          <p class="tl-desc" data-nl="Gasten bedienen in een restaurantomgeving, met jaren horecaervaring voor een vlotte en vriendelijke service." data-en="Serving guests in a restaurant setting, drawing on years of hospitality experience to deliver smooth, friendly service.">
+            Gasten bedienen in een restaurantomgeving, met jaren horecaervaring voor een vlotte en vriendelijke service.
           </p>
-          <span class="tl-badge amber">Current position</span>
+          <span class="tl-badge amber" data-nl="Huidige functie" data-en="Current position">Huidige functie</span>
         </div>
 
         <div class="tl-item">
           <div class="tl-dot now"></div>
-          <div class="tl-date">Current · Part-time</div>
-          <div class="tl-role">Chauffeur</div>
+          <div class="tl-date" data-nl="Huidig · Deeltijd" data-en="Current · Part-time">Huidig · Deeltijd</div>
+          <div class="tl-role" data-nl="Chauffeur" data-en="Chauffeur">Chauffeur</div>
           <div class="tl-org">MobiliteitsDiensten Nederland</div>
-          <p class="tl-desc">
-            Providing reliable transport on a part-time basis alongside other work and studies.
+          <p class="tl-desc" data-nl="Betrouwbaar vervoer verzorgen als bijbaan naast werk en studie." data-en="Providing reliable transport on a part-time basis alongside other work and studies.">
+            Betrouwbaar vervoer verzorgen als bijbaan naast werk en studie.
           </p>
-          <span class="tl-badge amber">Current position</span>
+          <span class="tl-badge amber" data-nl="Huidige functie" data-en="Current position">Huidige functie</span>
         </div>
 
         <div class="tl-item">
           <div class="tl-dot"></div>
           <div class="tl-date">2024 — 2026</div>
-          <div class="tl-role">Shift Manager</div>
+          <div class="tl-role" data-nl="Shiftmanager" data-en="Shift Manager">Shiftmanager</div>
           <div class="tl-org">BZG Horeca Groep &middot; Hospitality</div>
-          <p class="tl-desc">
-            Managed front-of-house operations during shifts: coordinating staff, handling guest
-            issues, and keeping service running on time and on standard.
+          <p class="tl-desc" data-nl="Front-of-house operaties beheren tijdens shifts: personeel coördineren, gastproblemen oplossen en de service op tijd en op niveau houden." data-en="Managed front-of-house operations during shifts: coordinating staff, handling guest issues, and keeping service running on time and on standard.">
+            Front-of-house operaties beheren tijdens shifts: personeel coördineren, gastproblemen oplossen en de service op tijd en op niveau houden.
           </p>
         </div>
 
         <div class="tl-item">
           <div class="tl-dot"></div>
           <div class="tl-date">2021 — 2024</div>
-          <div class="tl-role">Waiter</div>
+          <div class="tl-role" data-nl="Ober" data-en="Waiter">Ober</div>
           <div class="tl-org">BZG Horeca Groep &middot; Hospitality</div>
-          <p class="tl-desc">
-            Worked as a waiter across multiple years, building strong people skills and
-            experience in a busy hospitality environment.
+          <p class="tl-desc" data-nl="Meerdere jaren als ober gewerkt en sterke mensenkennis opgebouwd in een drukke horecaomgeving." data-en="Worked as a waiter across multiple years, building strong people skills and experience in a busy hospitality environment.">
+            Meerdere jaren als ober gewerkt en sterke mensenkennis opgebouwd in een drukke horecaomgeving.
           </p>
         </div>
 
         <div class="tl-item">
           <div class="tl-dot"></div>
           <div class="tl-date">2020 — 2021</div>
-          <div class="tl-role">Stocker</div>
+          <div class="tl-role" data-nl="Vakkenvuller" data-en="Stocker">Vakkenvuller</div>
           <div class="tl-org">Albert Heijn &middot; Supermarket</div>
-          <p class="tl-desc">
-            Stocked shelves and kept the store tidy. A straightforward part-time job during
-            the pandemic while hospitality was closed.
+          <p class="tl-desc" data-nl="Vakken vullen en de winkel netjes houden. Een eenvoudige bijbaan tijdens de pandemie, toen de horeca gesloten was." data-en="Stocked shelves and kept the store tidy. A straightforward part-time job during the pandemic while hospitality was closed.">
+            Vakken vullen en de winkel netjes houden. Een eenvoudige bijbaan tijdens de pandemie, toen de horeca gesloten was.
           </p>
         </div>
 
         <div class="tl-item">
           <div class="tl-dot"></div>
           <div class="tl-date">2019 — 2020</div>
-          <div class="tl-role">Waiter</div>
+          <div class="tl-role" data-nl="Ober" data-en="Waiter">Ober</div>
           <div class="tl-org">BZG Horeca Groep &middot; Hospitality</div>
-          <p class="tl-desc">
-            First role in hospitality — waiting tables and learning the basics of service
-            in a professional setting.
+          <p class="tl-desc" data-nl="Eerste baan in de horeca — tafels bedienen en de basis van professionele service leren." data-en="First role in hospitality — waiting tables and learning the basics of service in a professional setting.">
+            Eerste baan in de horeca — tafels bedienen en de basis van professionele service leren.
           </p>
         </div>
 
@@ -730,67 +790,67 @@
   <!-- ── SKILLS ─────────────────────────────────────────────────────── -->
   <section id="skills">
     <div class="container">
-      <p class="sec-label">What I bring</p>
-      <h2 class="sec-title">Skills &amp; Strengths</h2>
+      <p class="sec-label" data-nl="Wat ik meeneem" data-en="What I bring">Wat ik meeneem</p>
+      <h2 class="sec-title" data-nl="Vaardigheden &amp; Krachten" data-en="Skills &amp; Strengths">Vaardigheden &amp; Krachten</h2>
       <div class="sec-line"></div>
 
       <div class="skills-grid">
 
         <div class="sk-card">
-          <div class="sk-cat">🌍 Languages</div>
+          <div class="sk-cat" data-nl="🌍 Talen" data-en="🌍 Languages">🌍 Talen</div>
           <div class="sk-tags">
-            <span class="sk-tag">Dutch — Native</span>
-            <span class="sk-tag">English — Fluent</span>
-            <span class="sk-tag">French — Intermediate</span>
-            <span class="sk-tag">Latin — 7 years academic</span>
+            <span class="sk-tag" data-nl="Nederlands — Moedertaal" data-en="Dutch — Native">Nederlands — Moedertaal</span>
+            <span class="sk-tag" data-nl="Engels — Vloeiend" data-en="English — Fluent">Engels — Vloeiend</span>
+            <span class="sk-tag" data-nl="Frans — Gemiddeld" data-en="French — Intermediate">Frans — Gemiddeld</span>
+            <span class="sk-tag" data-nl="Latijn — 7 jaar academisch" data-en="Latin — 7 years academic">Latijn — 7 jaar academisch</span>
           </div>
         </div>
 
         <div class="sk-card">
-          <div class="sk-cat">👥 Leadership</div>
+          <div class="sk-cat" data-nl="👥 Leiderschap" data-en="👥 Leadership">👥 Leiderschap</div>
           <div class="sk-tags">
-            <span class="sk-tag">Team Management</span>
-            <span class="sk-tag">Shift Coordination</span>
-            <span class="sk-tag">Staff Onboarding</span>
+            <span class="sk-tag" data-nl="Teammanagement" data-en="Team Management">Teammanagement</span>
+            <span class="sk-tag" data-nl="Shiftcoördinatie" data-en="Shift Coordination">Shiftcoördinatie</span>
+            <span class="sk-tag" data-nl="Personeel Inwerken" data-en="Staff Onboarding">Personeel Inwerken</span>
           </div>
         </div>
 
         <div class="sk-card">
-          <div class="sk-cat">💬 Communication</div>
+          <div class="sk-cat" data-nl="💬 Communicatie" data-en="💬 Communication">💬 Communicatie</div>
           <div class="sk-tags">
-            <span class="sk-tag">Presentation Skills</span>
-            <span class="sk-tag">Customer Relations</span>
-            <span class="sk-tag">Persuasion</span>
-            <span class="sk-tag">Multilingual</span>
+            <span class="sk-tag" data-nl="Presentatievaardigheden" data-en="Presentation Skills">Presentatievaardigheden</span>
+            <span class="sk-tag" data-nl="Klantrelaties" data-en="Customer Relations">Klantrelaties</span>
+            <span class="sk-tag" data-nl="Overtuigingskracht" data-en="Persuasion">Overtuigingskracht</span>
+            <span class="sk-tag" data-nl="Meertalig" data-en="Multilingual">Meertalig</span>
           </div>
         </div>
 
         <div class="sk-card">
-          <div class="sk-cat">💻 Technical (Learning)</div>
+          <div class="sk-cat" data-nl="💻 Technisch (Lerend)" data-en="💻 Technical (Learning)">💻 Technisch (Lerend)</div>
           <div class="sk-tags">
             <span class="sk-tag">HTML &amp; CSS</span>
             <span class="sk-tag">JavaScript</span>
-            <span class="sk-tag">Web Development</span>
+            <span class="sk-tag" data-nl="Webontwikkeling" data-en="Web Development">Webontwikkeling</span>
           </div>
         </div>
 
         <div class="sk-card">
-          <div class="sk-cat">🌱 Academic</div>
+          <div class="sk-cat" data-nl="🌱 Academisch" data-en="🌱 Academic">🌱 Academisch</div>
           <div class="sk-tags">
-            <span class="sk-tag">Sustainability Science</span>
-            <span class="sk-tag">Research &amp; Analysis</span>
-            <span class="sk-tag">Academic Writing</span>
+            <span class="sk-tag" data-nl="Duurzaamheidswetenschap" data-en="Sustainability Science">Duurzaamheidswetenschap</span>
+            <span class="sk-tag" data-nl="Onderzoek &amp; Analyse" data-en="Research &amp; Analysis">Onderzoek &amp; Analyse</span>
+            <span class="sk-tag" data-nl="Academisch Schrijven" data-en="Academic Writing">Academisch Schrijven</span>
           </div>
         </div>
 
         <div class="sk-card">
-          <div class="sk-cat">✨ Soft Skills</div>
+          <div class="sk-cat" data-nl="✨ Persoonlijke Eigenschappen" data-en="✨ Soft Skills">✨ Persoonlijke Eigenschappen</div>
           <div class="sk-tags">
-            <span class="sk-tag">Adaptability</span>
-            <span class="sk-tag">Stress Resistance</span>
-            <span class="sk-tag">Team Player</span>
-            <span class="sk-tag">Initiative</span>
-            <span class="sk-tag">Problem Solving</span>
+            <span class="sk-tag" data-nl="Aanpassingsvermogen" data-en="Adaptability">Aanpassingsvermogen</span>
+            <span class="sk-tag" data-nl="Stressbestendigheid" data-en="Stress Resistance">Stressbestendigheid</span>
+            <span class="sk-tag" data-nl="Teamspeler" data-en="Team Player">Teamspeler</span>
+            <span class="sk-tag" data-nl="Initiatief" data-en="Initiative">Initiatief</span>
+            <span class="sk-tag" data-nl="Probleemoplossing" data-en="Problem Solving">Probleemoplossing</span>
           </div>
         </div>
 
@@ -801,32 +861,64 @@
   <!-- ── EDUCATION ──────────────────────────────────────────────────── -->
   <section id="education">
     <div class="container">
-      <p class="sec-label">Academic background</p>
-      <h2 class="sec-title">Education</h2>
+      <p class="sec-label" data-nl="Academische achtergrond" data-en="Academic background">Academische achtergrond</p>
+      <h2 class="sec-title" data-nl="Opleiding" data-en="Education">Opleiding</h2>
       <div class="sec-line"></div>
 
       <div class="edu-grid">
 
         <div class="edu-card">
-          <div class="edu-year">2022 — Present</div>
-          <div class="edu-degree">BSc Global Sustainability Sciences</div>
+          <div class="edu-year" data-nl="2022 — Heden" data-en="2022 — Present">2022 — Heden</div>
+          <div class="edu-degree" data-nl="BSc Mondiale Duurzaamheidswetenschappen" data-en="BSc Global Sustainability Sciences">BSc Mondiale Duurzaamheidswetenschappen</div>
           <div class="edu-school">Utrecht University &middot; Utrecht, Netherlands</div>
           <p class="edu-detail">
-            An interdisciplinary programme that connects natural science, social science, and humanities
-            to tackle the world's most pressing sustainability challenges. Develops both analytical
+            class="edu-detail" data-nl="Een interdisciplinair programma dat natuur-, sociale en geesteswetenschappen verbindt om de meest urgente duurzaamheidsvraagstukken aan te pakken. Ontwikkelt zowel analytisch inzicht als het vermogen om complexe ideeën te communiceren." data-en="An interdisciplinary programme that connects natural science, social science, and humanities to tackle the world's most pressing sustainability challenges. Develops both analytical
             rigour and the ability to communicate complex ideas across disciplines.
           </p>
         </div>
 
         <div class="edu-card">
-          <div class="edu-year">Graduated</div>
+          <div class="edu-year" data-nl="Afgestudeerd" data-en="Graduated">Afgestudeerd</div>
           <div class="edu-degree">Gymnasium (VWO)</div>
           <div class="edu-school">Stedelijk Gymnasium Den Bosch &middot; 's-Hertogenbosch, Netherlands</div>
-          <p class="edu-detail">
-            Pre-university grammar school with a classical track. Completed 7 years of Latin,
-            building a strong foundation in analytical thinking and classical languages. Also
-            studied French, which — alongside Latin — made Romance languages feel natural.
+          <p class="edu-detail" data-nl="VWO-opleiding met een klassiek profiel. Zeven jaar Latijn gevolgd, waarmee een sterke basis in analytisch denken en klassieke talen is gelegd. Ook Frans gestudeerd, wat — naast Latijn — Romaanse talen vanzelfsprekend laat aanvoelen." data-en="Pre-university grammar school with a classical track. Completed 7 years of Latin, building a strong foundation in analytical thinking and classical languages. Also studied French, which — alongside Latin — made Romance languages feel natural.">
+            VWO-opleiding met een klassiek profiel. Zeven jaar Latijn gevolgd, waarmee een sterke basis in analytisch denken en klassieke talen is gelegd. Ook Frans gestudeerd, wat — naast Latijn — Romaanse talen vanzelfsprekend laat aanvoelen.
           </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTERESTS ────────────────────────────────────────────────────── -->
+  <section id="interests">
+    <div class="container">
+      <p class="sec-label" data-nl="Buiten het CV" data-en="Beyond the CV">Buiten het CV</p>
+      <h2 class="sec-title" data-nl="Hobby's &amp; Interesses" data-en="Hobbies &amp; Interests">Hobby's &amp; Interesses</h2>
+      <div class="sec-line"></div>
+
+      <div class="interests-grid">
+
+        <div class="interest-card">
+          <div class="interest-icon">🏑</div>
+          <div class="interest-body">
+            <h3 data-nl="Veldhockey" data-en="Field Hockey">Veldhockey</h3>
+            <div class="interest-sub" data-nl="Teamsport" data-en="Team sport">Teamsport</div>
+            <p class="interest-desc" data-nl="Veldhockey houdt me scherp, zowel fysiek als mentaal. De sport heeft me geleerd hoe je onder druk presteert, snel een situatie inschat en altijd er bent voor je teamgenoten — waarden die direct doorwerken op de werkvloer." data-en="Playing field hockey keeps me sharp both physically and mentally. The sport has taught me how to perform under pressure, read a situation quickly, and always show up for your teammates — values that carry directly into the workplace.">
+              Veldhockey houdt me scherp, zowel fysiek als mentaal. De sport heeft me geleerd hoe je onder druk presteert, snel een situatie inschat en altijd er bent voor je teamgenoten — waarden die direct doorwerken op de werkvloer.
+            </p>
+          </div>
+        </div>
+
+        <div class="interest-card">
+          <div class="interest-icon">🍷</div>
+          <div class="interest-body">
+            <h3 data-nl="Sommelier in Opleiding" data-en="Sommelier in Training">Sommelier in Opleiding</h3>
+            <div class="interest-sub" data-nl="Wijn &amp; horeca" data-en="Wine &amp; hospitality">Wijn &amp; horeca</div>
+            <p class="interest-desc" data-nl="Mijn kennis van wijn verdiepen — van druif tot glas. Deze passie past natuurlijk bij mijn jaren in de horeca en drijft me om de verfijnde details van service, smaak en de verhalen achter wat we op tafel zetten te begrijpen." data-en="Deepening my knowledge of wine — from grape to glass. This passion sits naturally alongside my years in hospitality and pushes me to understand the finer details of service, taste, and the stories behind what we put on the table.">
+              Mijn kennis van wijn verdiepen — van druif tot glas. Deze passie past natuurlijk bij mijn jaren in de horeca en drijft me om de verfijnde details van service, smaak en de verhalen achter wat we op tafel zetten te begrijpen.
+            </p>
+          </div>
         </div>
 
       </div>
@@ -836,29 +928,27 @@
   <!-- ── CONTACT ─────────────────────────────────────────────────────── -->
   <section id="contact">
     <div class="container">
-      <p class="sec-label">Let's connect</p>
-      <h2 class="sec-title">Get in Touch</h2>
+      <p class="sec-label" data-nl="Laten we kennismaken" data-en="Let's connect">Laten we kennismaken</p>
+      <h2 class="sec-title" data-nl="Neem Contact Op" data-en="Get in Touch">Neem Contact Op</h2>
       <div class="sec-line"></div>
 
       <div class="contact-grid">
         <div>
-          <p class="contact-intro">
-            Whether you're looking for a motivated team player, a bilingual communicator,
-            or someone who brings sustainability thinking to real-world challenges —
-            I'd love to have a conversation.
+          <p class="contact-intro" data-nl="Of je nu op zoek bent naar een gemotiveerde teamspeler, een tweetalige communicator of iemand die duurzaamheidsdenken vertaalt naar dagelijkse uitdagingen — ik praat graag met je." data-en="Whether you're looking for a motivated team player, a bilingual communicator, or someone who brings sustainability thinking to real-world challenges — I'd love to have a conversation.">
+            Of je nu op zoek bent naar een gemotiveerde teamspeler, een tweetalige communicator of iemand die duurzaamheidsdenken vertaalt naar dagelijkse uitdagingen — ik praat graag met je.
           </p>
           <div class="contact-links">
             <a href="mailto:boudewijnvanrijswijk@gmail.com" class="c-link">
               <div class="c-icon">✉️</div>
               <div>
-                <div class="c-label">Email</div>
+                <div class="c-label" data-nl="E-mail" data-en="Email">E-mail</div>
                 <div class="c-value">boudewijnvanrijswijk@gmail.com</div>
               </div>
             </a>
             <a href="tel:+31624129227" class="c-link">
               <div class="c-icon">📱</div>
               <div>
-                <div class="c-label">Phone</div>
+                <div class="c-label" data-nl="Telefoon" data-en="Phone">Telefoon</div>
                 <div class="c-value">+31 6 24 12 92 27</div>
               </div>
             </a>
@@ -871,15 +961,14 @@
             </a>
           </div>
           <div class="contact-btns">
-            <a href="mailto:boudewijnvanrijswijk@gmail.com" class="btn btn-solid">✉️ Send an email</a>
-            <a href="https://www.linkedin.com/in/boudewijn-van-rijswijk-0a0b6528b" target="_blank" rel="noopener" class="btn btn-linkedin">💼 View LinkedIn</a>
+            <a href="mailto:boudewijnvanrijswijk@gmail.com" class="btn btn-solid"  data-nl="✉️ Stuur een e-mail" data-en="✉️ Send an email">✉️ Stuur een e-mail</a>
+            <a href="https://www.linkedin.com/in/boudewijn-van-rijswijk-0a0b6528b" target="_blank" rel="noopener" class="btn btn-linkedin"  data-nl="💼 Bekijk LinkedIn" data-en="💼 View LinkedIn">💼 Bekijk LinkedIn</a>
           </div>
         </div>
 
         <div class="quote-card">
           <p class="quote-text">
-            "I work hard, I care about the people around me, and I always find a way to
-            make things work — whether it's a busy Friday night shift or a tight deadline."
+            "Ik werk hard, ik geef om de mensen om me heen en ik vind altijd een manier om het voor elkaar te krijgen — of het nu een drukke vrijdagavonddienst is of een strakke deadline."
           </p>
           <div class="quote-attr">— Boudewijn van Rijswijk</div>
         </div>
@@ -891,13 +980,32 @@
   <footer>
     <p>© 2026 <em>Boudewijn van Rijswijk</em></p>
     <div class="footer-links">
-      <a href="#home">Back to top ↑</a>
-      <a href="mailto:boudewijnvanrijswijk@gmail.com">Email me</a>
+      <a href="#home"  data-nl="Terug naar boven ↑" data-en="Back to top ↑">Terug naar boven ↑</a>
+      <a href="mailto:boudewijnvanrijswijk@gmail.com"  data-nl="Mail mij" data-en="Email me">Mail mij</a>
     </div>
   </footer>
 
   <!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
   <script>
+
+    /* ── LANGUAGE TOGGLE ─────────────────────────────── */
+    function toggleLang() {
+      const current = document.documentElement.getAttribute('data-lang') || 'nl';
+      setLang(current === 'nl' ? 'en' : 'nl');
+    }
+
+    function setLang(lang) {
+      document.documentElement.setAttribute('data-lang', lang);
+      document.querySelectorAll('[data-nl]').forEach(el => {
+        el.innerHTML = el.getAttribute('data-' + lang);
+      });
+      const btn = document.getElementById('lang-btn');
+      if (btn) btn.textContent = lang === 'nl' ? 'EN' : 'NL';
+      localStorage.setItem('lang', lang);
+    }
+
+    // Restore saved language preference
+    setLang(localStorage.getItem('lang') || 'nl');
     /* — Navbar scroll class — */
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
@@ -936,7 +1044,7 @@
     }, { threshold: 0.12 });
 
     document.querySelectorAll(
-      '.tl-item, .sk-card, .edu-card, .fade-up'
+      '.tl-item, .sk-card, .edu-card, .interest-card, .fade-up'
     ).forEach(el => io.observe(el));
 
     /* stagger delays */
